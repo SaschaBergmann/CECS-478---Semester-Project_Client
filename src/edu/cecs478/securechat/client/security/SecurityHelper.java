@@ -6,36 +6,17 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 
 /**
- * Created by sasch on 10/10/2017.
+ * Created by FinnB on 10/10/2017.
  */
 public class SecurityHelper {
-    public static String readFileAsString(String filePath)
-            throws java.io.IOException{
-        StringBuffer fileData = new StringBuffer(3000);
-        BufferedReader reader = new BufferedReader(
-                new FileReader(filePath));
-        char[] buf = new char[3000];
-        int numRead=0;
-        while((numRead=reader.read(buf)) != -1){
-            String readData = String.valueOf(buf, 0, numRead);
-            fileData.append(readData);
-            buf = new char[3000];
-        }
-        reader.close();
-        System.out.println(fileData.toString());
-        return fileData.toString();
-    }
 
-
-    public static String getHexString(byte[] b) throws Exception {
-        String result = "";
-        for (int i=0; i < b.length; i++) {
-            result +=
-                    Integer.toString( ( b[i] & 0xff ) + 0x100, 16).substring( 1 );
-        }
-        return result;
-    }
-
+    /**
+     * Runs the given data through the given paddedbufferedBLockCipher
+     * @param cipher PaddedBufferedBlockCipher that can be either encryption or decryption mode.
+     * @param data Data that should be en- or decrypted
+     * @return returns the data after it ran through the Cipher
+     * @throws Exception Every Exception that can arise in the processs will be thrown upwards
+     */
     public static byte[] cipherData(PaddedBufferedBlockCipher cipher, byte[] data) throws Exception {
         int minSize = cipher.getOutputSize(data.length);
         byte[] outBuf = new byte[minSize];
