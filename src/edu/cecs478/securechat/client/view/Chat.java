@@ -49,6 +49,8 @@ public class Chat {
                 }
 
                 printToHistory(message.toString());
+
+                printToHistory("\n\n\n------------------------------\n\n\n");
             }
         });
     }
