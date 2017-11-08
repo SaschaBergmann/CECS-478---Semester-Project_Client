@@ -18,7 +18,7 @@ public class Chat {
     private JTextField chatInputTextField;
     private JTextPane chatHistoryTextPane;
     private JButton sendButton;
-    private JPanel Base;
+    public JPanel Base;
     private JScrollPane ContentScroller;
 
     public Chat() {
@@ -56,13 +56,4 @@ public class Chat {
         private void printToHistory(String content){
         chatHistoryTextPane.setText(chatHistoryTextPane.getText()+"\n"+content);
      }
-
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Chat");
-        frame.setContentPane(new Chat().Base);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-        frame.setSize(1000,1000);
-    }
 }

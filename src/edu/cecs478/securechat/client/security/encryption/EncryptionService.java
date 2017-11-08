@@ -56,7 +56,6 @@ public class EncryptionService {
                     PublicKey pubk = (PublicKey)o;
                     Cipher cipher = Cipher.getInstance("RSA/NONE/OAEPWithSHA256AndMGF1Padding","BC");
 
-
                     cipher.init(Cipher.ENCRYPT_MODE, pubk);
                     encryptedData = cipher.doFinal(input);
                 }

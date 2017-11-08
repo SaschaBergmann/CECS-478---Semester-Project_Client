@@ -13,6 +13,7 @@ public class Message {
     private byte[] recipient;
     private byte[] keys;
     private byte[] HMACHash;
+    private byte[] jwt;
 
     public Message( byte[] message,  byte[] sender,  byte[] recipient,  byte[] iv,  byte[] HMAC) {
         this.message = message;
@@ -86,5 +87,13 @@ public class Message {
         }
 
         return output;
+    }
+
+    public byte[] getJwt() {
+        return jwt;
+    }
+
+    public void setJwt(byte[] jwt) {
+        this.jwt = jwt;
     }
 }
