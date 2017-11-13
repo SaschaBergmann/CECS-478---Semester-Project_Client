@@ -25,7 +25,7 @@ public class Registration {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(name.getText() != "" && pwd.getPassword().length > 5){
-                    Account a = new Account(name.getText(), (new String(pwd.getPassword()).getBytes()), new byte[0], new byte[0], new byte[0]);
+                    Account a = new Account(name.getText(), (new String(pwd.getPassword()).getBytes()), new byte[0], new byte[0], "");
 
                     AccountJsonConverter conv = new AccountJsonConverter();
                     try {
@@ -36,14 +36,12 @@ public class Registration {
                         e1.printStackTrace();
                     }
 
-
-                    JFrame frame = new JFrame("Chat");
-                    frame.setContentPane(new Chat().Base);
+                    JFrame frame = new JFrame("Login");
+                    frame.setContentPane(new Login().Base);
                     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                     frame.pack();
                     frame.setVisible(true);
-                    frame.setSize(1000,1000);
-
+                    frame.setSize(500,500);
 
                     Base.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 

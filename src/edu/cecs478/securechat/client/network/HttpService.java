@@ -5,6 +5,7 @@ import com.google.gson.JsonParser;
 import edu.cecs478.securechat.client.network.exceptions.HttpResponseNotCorrectException;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
@@ -19,7 +20,7 @@ import java.io.UnsupportedEncodingException;
 public class HttpService {
     private static HttpClient httpClient    = new DefaultHttpClient();
 
-    public static JsonObject sendPOSTRequest(String json, String url) throws UnsupportedEncodingException, HttpResponseNotCorrectException {
+    public static String sendPOSTRequest(String json, String url) throws UnsupportedEncodingException, HttpResponseNotCorrectException {
         HttpPost     post          = new HttpPost(url);
         StringEntity postingString = new StringEntity(json);
         post.setEntity(postingString);
@@ -28,15 +29,31 @@ public class HttpService {
             HttpResponse response = httpClient.execute(post);
 
             if(response.getStatusLine().getStatusCode() == 200) {
-                String responseString = new BasicResponseHandler().handleResponse(response);
-                JsonObject obj = new JsonParser().parse(responseString).getAsJsonObject();
-                return obj;
+                return new BasicResponseHandler().handleResponse(response);
             }
             throw new HttpResponseNotCorrectException(response.getStatusLine());
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        return "";
+    }
+
+    public static String sendGetRequest(String url, String token) throws UnsupportedEncodingException, HttpResponseNotCorrectException {
+        HttpGet get = new HttpGet(url);
+        try {
+
+            get.setHeader("Authorization", token);
+            HttpResponse response = httpClient.execute(get);
+
+            if(response.getStatusLine().getStatusCode() == 200) {
+                return new BasicResponseHandler().handleResponse(response);
+            }
+            throw new HttpResponseNotCorrectException(response.getStatusLine());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }

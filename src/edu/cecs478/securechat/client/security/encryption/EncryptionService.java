@@ -53,7 +53,7 @@ public class EncryptionService {
 
             byte[] concatenated = ArrayUtils.addAll(aESKey,hmacKey);
 
-            msg.setKeys(encryptRSA(concatenated, rsaKeyFilePath));
+            msg.setEncryptionK(encryptRSA(concatenated, rsaKeyFilePath));
             return msg;
         }catch (Exception e){
             e.printStackTrace();
@@ -79,15 +79,11 @@ public class EncryptionService {
                 Object o = reader.readObject();
                 if (o instanceof PublicKey){
                     PublicKey pubk = (PublicKey)o;
-<<<<<<< HEAD
-                    Cipher cipher = Cipher.getInstance("RSA/NONE/OAEPWithSHA256AndMGF1Padding","BC");
 
-=======
 
                     //Setting the cipher suite
                     Cipher cipher = Cipher.getInstance("RSA/NONE/OAEPWithSHA256AndMGF1Padding","BC");
                     //Setting the cipher to decryption
->>>>>>> c97a5f1922290f63ec3c097dd1841f0d2d78c02e
                     cipher.init(Cipher.ENCRYPT_MODE, pubk);
                     encryptedData = cipher.doFinal(input);
                 }

@@ -11,11 +11,11 @@ public class Account {
     private byte[] salt;
     private byte[] lastChallenge;
     private Date lastTokenDate;
-    private byte[] token;
+    private String token;
 
     protected Account(){}
 
-    public Account(String username, byte[] pwd, byte[] salt, byte[] lastChallenge, byte[] token) {
+    public Account(String username, byte[] pwd, byte[] salt, byte[] lastChallenge, String token) {
         this.username = username;
         this.pwd = pwd;
         this.salt = salt;
@@ -71,11 +71,11 @@ public class Account {
         this.lastChallenge = lastChallenge;
     }
 
-    public byte[] getToken() {
+    public String getToken() {
         return token;
     }
 
-    public void setToken(byte[] token) {
+    public void setToken(String token) {
         this.token = token;
     }
 }

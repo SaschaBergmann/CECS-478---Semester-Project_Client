@@ -14,13 +14,11 @@ import org.bouncycastle.crypto.paddings.PaddedBufferedBlockCipher;
 import org.bouncycastle.crypto.params.KeyParameter;
 import org.bouncycastle.crypto.params.ParametersWithIV;
 import org.bouncycastle.openssl.PEMReader;
-import org.bouncycastle.openssl.PasswordFinder;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import java.io.FileReader;
 import java.security.KeyPair;
-import java.security.PrivateKey;
 import java.security.Security;
 import java.util.Arrays;
 
@@ -39,7 +37,7 @@ public class DecryptionService{
      */
     public static Message decrypt(Message msg, String rsaKeyFilePath) throws IntegrityNotGuaranteedException{
 
-        byte[] keyString = RSADecrypt(msg.getKeys(), rsaKeyFilePath);
+        byte[] keyString = RSADecrypt(msg.getEncryptionK(), rsaKeyFilePath);
 
         byte[] aesKey = ArrayUtils.subarray(keyString, 0, 32);
         byte[] HMACKey = ArrayUtils.subarray(keyString, 32, 64);
