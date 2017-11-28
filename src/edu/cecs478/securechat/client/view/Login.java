@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 /**
  * Created by sasch on 08/11/2017.
  */
-public class Login {
+public class Login extends JFrame{
     public JPanel Base;
     private JTextField usernameInputTextField;
     private JTextField passwordTextField;
@@ -24,13 +24,15 @@ public class Login {
 
                 Session session = new Session(account);
 
-                JFrame frame = new JFrame("Chat");
+                JFrame frame = (JFrame)SwingUtilities.getRoot(Base);
+                frame.setTitle("Chat");
                 Chat chat = new Chat(session);
                 frame.setContentPane(chat.Base);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.pack();
                 frame.setVisible(true);
                 frame.setSize(1000,1000);
+                dispose();
             }
         });
     }

@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * Created by sasch on 09/10/2017.
  */
-public class Chat {
+public class Chat extends JFrame{
     private JTextField chatInputTextField;
     private JButton sendButton;
     public JPanel Base;
@@ -51,8 +51,6 @@ public class Chat {
         sendButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                String publicKey = "./"+prefix+"public.pem";
-
                 if (!store.isKeyAvailable(recepientTextField.getText())){
                     getPublicKey(recepientTextField.getText());
                 }
@@ -63,7 +61,7 @@ public class Chat {
 
                 printToHistory("Message sent");
 
-                message = EncryptionService.encrypt(message, publicKey);
+                message = EncryptionService.encrypt(message, store.getKey(recepientTextField.getText()));
                 session.sendMessage(message);
             }
         });
@@ -71,9 +69,7 @@ public class Chat {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String privateKey = "./"+prefix+"private.pem";
-
                 List<Message> msgs;
-
                 msgs = session.getMessages();
 
                 for (Message message :

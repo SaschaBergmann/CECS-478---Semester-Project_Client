@@ -42,7 +42,7 @@ public class EncryptionService {
      * @param rsaKeyFilePath Path to the public key file for the RSA encryption
      * @return message parameter object now containing the ciphertext, keys, iv
      */
-    public static Message encrypt(Message msg, String rsaKeyFilePath){
+    public static Message encrypt(Message msg, PublicKey publicKey){
         try {
             byte[] aESKey = EncryptionService.createPseudoRandomKey(256/8);
             msg.setIv(EncryptionService.createPseudoRandomKey(16));
@@ -53,7 +53,7 @@ public class EncryptionService {
 
             byte[] concatenated = ArrayUtils.addAll(aESKey,hmacKey);
 
-            msg.setEncryptionK(encryptRSA(concatenated, rsaKeyFilePath));
+            msg.setEncryptionK(encryptRSA(concatenated, publicKey));
             return msg;
         }catch (Exception e){
             e.printStackTrace();
@@ -64,32 +64,19 @@ public class EncryptionService {
     /**
      * Encrypts the byte input with the public key
      * @param input input to be encrypted
-     * @param rsaKeyFilePath File path to the public key file
+     * @param pubk Public key used for encryption
      * @return encrypted data
      */
-    private static byte[] encryptRSA(byte[] input, String rsaKeyFilePath){
+    private static byte[] encryptRSA(byte[] input, PublicKey pubk){
         byte[] encryptedData = null;
         try {
             //Setting bouncy castle as security provider
             Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
-
-            //Reading the public key file
-            PEMReader reader = new PEMReader(new FileReader(rsaKeyFilePath));
-            try {
-                Object o = reader.readObject();
-                if (o instanceof PublicKey){
-                    PublicKey pubk = (PublicKey)o;
-
-
-                    //Setting the cipher suite
-                    Cipher cipher = Cipher.getInstance("RSA/NONE/OAEPWithSHA256AndMGF1Padding","BC");
-                    //Setting the cipher to decryption
-                    cipher.init(Cipher.ENCRYPT_MODE, pubk);
-                    encryptedData = cipher.doFinal(input);
-                }
-            } catch (Exception e){
-                e.printStackTrace();
-            }
+            //Setting the cipher suite
+            Cipher cipher = Cipher.getInstance("RSA/NONE/OAEPWithSHA256AndMGF1Padding","BC");
+            //Setting the cipher to decryption
+            cipher.init(Cipher.ENCRYPT_MODE, pubk);
+            encryptedData = cipher.doFinal(input);
         }
         catch (Exception e) {
             System.out.println(e);

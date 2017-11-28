@@ -14,7 +14,7 @@ import java.io.UnsupportedEncodingException;
 /**
  * Created by sasch on 02/11/2017.
  */
-public class Registration {
+public class Registration extends JFrame {
     private JTextField name;
     private JPasswordField pwd;
     private JButton registerButton;
@@ -35,16 +35,13 @@ public class Registration {
                     } catch (HttpResponseNotCorrectException e1) {
                         e1.printStackTrace();
                     }
-
-                    JFrame frame = new JFrame("Login");
+                    JFrame frame = (JFrame)SwingUtilities.getRoot(Base);
+                    frame.setTitle("Login");
                     frame.setContentPane(new Login().Base);
                     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                     frame.pack();
                     frame.setVisible(true);
                     frame.setSize(500,500);
-
-                    Base.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
-
                 }
             }
         });
