@@ -19,11 +19,10 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="a6a63" class="javax.swing.JTextPane" binding="chatHistoryTextPane" default-binding="true">
+          <component id="a6f92" class="javax.swing.JList" binding="ChatList">
             <constraints/>
             <properties>
-              <font name="Consolas" size="20" style="0"/>
-              <text value=""/>
+              <font size="25"/>
             </properties>
           </component>
         </children>
@@ -34,7 +33,7 @@
           <gridbag weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>
-          <font swing-font="Button.font"/>
+          <font size="40" style="3"/>
           <text value="Send"/>
         </properties>
       </component>
@@ -44,6 +43,7 @@
           <gridbag weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>
+          <font size="40" style="3"/>
           <text value="Recieve"/>
         </properties>
       </component>
@@ -53,8 +53,8 @@
           <gridbag weightx="1.0" weighty="0.0"/>
         </constraints>
         <properties>
-          <font name="Consolas" size="20" style="0"/>
-          <text value="ChatInput"/>
+          <font size="30"/>
+          <text value=""/>
         </properties>
       </component>
       <component id="9cf77" class="javax.swing.JTextField" binding="recepientTextField">
@@ -64,7 +64,9 @@
           </grid>
           <gridbag weightx="1.0" weighty="0.0"/>
         </constraints>
-        <properties/>
+        <properties>
+          <font size="30"/>
+        </properties>
       </component>
       <component id="c3bed" class="javax.swing.JLabel">
         <constraints>
@@ -72,6 +74,7 @@
           <gridbag weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>
+          <font size="25" style="1"/>
           <text value="Message"/>
         </properties>
       </component>
@@ -81,6 +84,7 @@
           <gridbag weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>
+          <font size="25" style="1"/>
           <text value="Recipient"/>
         </properties>
       </component>
