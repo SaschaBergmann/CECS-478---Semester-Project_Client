@@ -19,5 +19,5 @@ public class SecureChatPasswordFinder implements PasswordFinder {
     @Override
     public char[] getPassword() {
         return ("NotFrench").toCharArray();
-    }
+    } //TODO: Read from file
 }

@@ -2,6 +2,8 @@ package edu.cecs478.securechat.client.network;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
+import edu.cecs478.securechat.client.helper.Constants;
 import edu.cecs478.securechat.client.network.exceptions.HttpResponseNotCorrectException;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -24,7 +26,7 @@ public class HttpService {
         HttpPost     post          = new HttpPost(url);
         StringEntity postingString = new StringEntity(json);
         post.setEntity(postingString);
-        post.setHeader("Content-type", "application/json");
+        post.setHeader(Constants.CONTENT_TYPE_HEADER_NAME, Constants.CONTENT_TYPE_JSON);
         try {
             HttpResponse response = httpClient.execute(post);
 
@@ -43,7 +45,7 @@ public class HttpService {
         HttpGet get = new HttpGet(url);
         try {
 
-            get.setHeader("Authorization", token);
+            get.setHeader(Constants.AUTHORIZATION_HEADER_TOKEN_NAME, token);
             HttpResponse response = httpClient.execute(get);
 
             if(response.getStatusLine().getStatusCode() == 200) {

@@ -1,5 +1,6 @@
 package edu.cecs478.securechat.client.security.pem;
 
+import edu.cecs478.securechat.client.helper.Constants;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.openssl.PEMWriter;
 
@@ -20,13 +21,13 @@ public class PEMKeyGenerator {
         //Generate the key pair
         final KeyPair generateKeyPair = generateKeyPair(2048);
 
-        final File privateKeyFile = new File("./"+prefix + "private.pem");
+        final File privateKeyFile = new File("./"+prefix + Constants.PRIVATE_KEY_ENDING);
         final PEMWriter privatePemWriter = new PEMWriter(new FileWriter(privateKeyFile));
         privatePemWriter.writeObject(generateKeyPair.getPrivate());
         privatePemWriter.flush();
         privatePemWriter.close();
 
-         final File publicKeyFile = new File("./"+prefix + "public.pem");
+         final File publicKeyFile = new File("./"+prefix + Constants.PUBLIC_KEY_ENDING);
         final PEMWriter publicPemWriter = new PEMWriter(new FileWriter(publicKeyFile));
         publicPemWriter.writeObject(generateKeyPair.getPublic());
         publicPemWriter.flush();
@@ -37,7 +38,7 @@ public class PEMKeyGenerator {
     private KeyPair generateKeyPair(Integer keyLength) {
         final KeyPairGenerator kpg;
         try { 
-            kpg = KeyPairGenerator.getInstance("RSA", BouncyCastleProvider.PROVIDER_NAME);
+            kpg = KeyPairGenerator.getInstance(Constants.RSA_GENERATION_TYPE, BouncyCastleProvider.PROVIDER_NAME);
         }
         catch (NoSuchAlgorithmException e) {
             throw new IllegalStateException("RSA support could not be found. There is a problem with this JVM.", e); 
