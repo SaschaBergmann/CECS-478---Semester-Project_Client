@@ -1,5 +1,6 @@
 package edu.cecs478.securechat.client.view;
 
+import edu.cecs478.securechat.client.helper.Constants;
 import edu.cecs478.securechat.client.model.Account;
 import edu.cecs478.securechat.client.network.HttpService;
 import edu.cecs478.securechat.client.network.exceptions.HttpResponseNotCorrectException;
@@ -15,6 +16,7 @@ import java.io.UnsupportedEncodingException;
  * Created by sasch on 02/11/2017.
  */
 public class Registration extends JFrame {
+    private String URLBase = "";
     private JTextField name;
     private JPasswordField pwd;
     private JButton registerButton;
@@ -29,7 +31,7 @@ public class Registration extends JFrame {
 
                     AccountJsonConverter conv = new AccountJsonConverter();
                     try {
-                        HttpService.sendPOSTRequest(conv.convert(a),"http://127.0.0.1:8080/account/register");
+                        HttpService.sendPOSTRequest(conv.convert(a),URLBase+Constants.URL_ACCOUNT_REGISTER);
                     } catch (UnsupportedEncodingException e1) {
                         e1.printStackTrace();
                     } catch (HttpResponseNotCorrectException e1) {
@@ -37,7 +39,9 @@ public class Registration extends JFrame {
                     }
                     JFrame frame = (JFrame)SwingUtilities.getRoot(Base);
                     frame.setTitle("Login");
-                    frame.setContentPane(new Login().Base);
+                    Login l = new Login();
+                    l.setURLBase(URLBase);
+                    frame.setContentPane(l.Base);
                     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                     frame.pack();
                     frame.setVisible(true);
@@ -45,5 +49,13 @@ public class Registration extends JFrame {
                 }
             }
         });
+    }
+
+    public String getURLBase() {
+        return URLBase;
+    }
+
+    public void setURLBase(String URLBase) {
+        this.URLBase = URLBase;
     }
 }

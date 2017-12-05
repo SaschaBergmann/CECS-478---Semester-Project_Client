@@ -29,11 +29,13 @@ public class Session {
 
     private boolean loggedIn = false;
     private Account account;
+    private String urlBase = "";
 
-    public Session(Account user){
+    public Session(Account user, String url){
         try {
-            String obj = HttpService.sendPOSTRequest(user.getUsername(), "http://127.0.0.1:8080"+Constants.URL_ENDING_LOGIN1);
-            //TODO: Read URL from dialog
+            urlBase = url;
+
+            String obj = HttpService.sendPOSTRequest(user.getUsername(), urlBase+Constants.URL_ENDING_LOGIN1);
 
             Login1ResponseConverter respConv1 = new Login1ResponseConverter();
 
@@ -55,7 +57,7 @@ public class Session {
 
             ObjectMapper mapper = new ObjectMapper();
             try {
-                obj = HttpService.sendPOSTRequest(mapper.writeValueAsString(wrapper), "http://127.0.0.1:8080"+Constants.URL_ENDING_LOGIN2);
+                obj = HttpService.sendPOSTRequest(mapper.writeValueAsString(wrapper), urlBase+Constants.URL_ENDING_LOGIN2);
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
@@ -81,7 +83,7 @@ public class Session {
 
         ObjectMapper mapper = new ObjectMapper();
         try {
-            HttpService.sendPOSTRequest(mapper.writeValueAsString(msg),"http://127.0.0.1:8080"+Constants.URL_MESSAGE_SEND);
+            HttpService.sendPOSTRequest(mapper.writeValueAsString(msg),urlBase+Constants.URL_MESSAGE_SEND);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (HttpResponseNotCorrectException e) {
@@ -95,7 +97,7 @@ public class Session {
 
         ObjectMapper mapper = new ObjectMapper();
         try {
-            String response = HttpService.sendGetRequest("http://127.0.0.1:8080"+Constants.URL_RECEIVE_MESSAGE+account.getUsername(), account.getToken());
+            String response = HttpService.sendGetRequest(urlBase+Constants.URL_RECEIVE_MESSAGE+account.getUsername(), account.getToken());
             ArrayList<Message> messages = mapper.readValue(response, new TypeReference<ArrayList<Message>>(){});
             return messages;
         } catch (UnsupportedEncodingException e) {
@@ -110,4 +112,11 @@ public class Session {
         return null;
     }
 
+    public String getUrlBase() {
+        return urlBase;
+    }
+
+    public void setUrlBase(String urlBase) {
+        this.urlBase = urlBase;
+    }
 }

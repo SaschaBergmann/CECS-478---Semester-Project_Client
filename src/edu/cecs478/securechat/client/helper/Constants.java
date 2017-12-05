@@ -13,6 +13,7 @@ public class Constants {
     public static String URL_ENDING_LOGIN2 = "/account/login2";
     public static String URL_MESSAGE_SEND = "/message/send";
     public static String URL_RECEIVE_MESSAGE = "/message/receive/";
+    public static String URL_ACCOUNT_REGISTER = "/account/register";
 
     public static String RSA_CIPHER_SUITE = "RSA/NONE/OAEPWithSHA256AndMGF1Padding";
     public static String SECURITY_PROVIDER = "BC";
