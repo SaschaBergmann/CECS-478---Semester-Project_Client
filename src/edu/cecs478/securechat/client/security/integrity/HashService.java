@@ -1,5 +1,6 @@
 package edu.cecs478.securechat.client.security.integrity;
 
+import edu.cecs478.securechat.client.helper.Constants;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.UnsupportedEncodingException;
@@ -11,7 +12,7 @@ import java.security.NoSuchAlgorithmException;
  */
 public class HashService {
     public static byte[] hash(byte[] input, byte[] salt) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        MessageDigest md = MessageDigest.getInstance(Constants.HASH_VERSION);
         byte[] concatinated = ArrayUtils.addAll(input,salt);
         md.update(concatinated); // Change this to "UTF-16" if needed
         byte[] digest = md.digest();

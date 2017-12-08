@@ -1,5 +1,6 @@
 package edu.cecs478.securechat.client.security.encryption;
 
+import edu.cecs478.securechat.client.helper.Constants;
 import edu.cecs478.securechat.client.model.Message;
 import edu.cecs478.securechat.client.security.SecurityHelper;
 import edu.cecs478.securechat.client.security.exceptions.IntegrityNotGuaranteedException;
@@ -44,11 +45,11 @@ public class EncryptionService {
      */
     public static Message encrypt(Message msg, PublicKey publicKey){
         try {
-            byte[] aESKey = EncryptionService.createPseudoRandomKey(256/8);
-            msg.setIv(EncryptionService.createPseudoRandomKey(16));
+            byte[] aESKey = EncryptionService.createPseudoRandomKey(Constants.AES_KEY_LENGTH);
+            msg.setIv(EncryptionService.createPseudoRandomKey(Constants.IV_SIZE));
             IvParameterSpec ivParamSpec = new IvParameterSpec(msg.getIv());
             msg.setMessage(AESEncrypt(msg.getMessage(), aESKey, ivParamSpec));
-            byte[] hmacKey = EncryptionService.createPseudoRandomKey(256/8);
+            byte[] hmacKey = EncryptionService.createPseudoRandomKey(Constants.HMAC_KEY_SIZE);
             msg.setHMACHash(HMACService.CreateHMACHash(msg.getMessage(),hmacKey));
 
             byte[] concatenated = ArrayUtils.addAll(aESKey,hmacKey);
@@ -73,7 +74,7 @@ public class EncryptionService {
             //Setting bouncy castle as security provider
             Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
             //Setting the cipher suite
-            Cipher cipher = Cipher.getInstance("RSA/NONE/OAEPWithSHA256AndMGF1Padding","BC");
+            Cipher cipher = Cipher.getInstance(Constants.RSA_CIPHER_SUITE,Constants.SECURITY_PROVIDER);
             //Setting the cipher to decryption
             cipher.init(Cipher.ENCRYPT_MODE, pubk);
             encryptedData = cipher.doFinal(input);
@@ -107,7 +108,7 @@ public class EncryptionService {
      * @throws NoSuchAlgorithmException If the random algorithm isn't found this exception is thrown
      */
     private static byte[] createPseudoRandomKey(int cipherBlockSize) throws NoSuchAlgorithmException {
-        SecureRandom randomSecureRandom = SecureRandom.getInstance("SHA1PRNG");
+        SecureRandom randomSecureRandom = SecureRandom.getInstance(Constants.RANDOM_NUMBER_GEN_SUITE);
         byte[] iv = new byte[cipherBlockSize];
         randomSecureRandom.nextBytes(iv);
 

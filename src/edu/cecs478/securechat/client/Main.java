@@ -3,6 +3,7 @@ package edu.cecs478.securechat.client;
 import edu.cecs478.securechat.client.security.pem.PEMKeyGenerator;
 import edu.cecs478.securechat.client.view.Login;
 import edu.cecs478.securechat.client.view.Registration;
+import edu.cecs478.securechat.client.view.ServerSelection;
 
 import javax.swing.*;
 import java.io.File;
@@ -13,30 +14,12 @@ import java.io.File;
 public class Main {
 
     public static void main(String[] args) {
-        String prefix = "SecureChat";
-        File f = new File("./"+prefix+"public.pem");
-        if(!(f.exists() && !f.isDirectory())) {
-            PEMKeyGenerator keyGen = new PEMKeyGenerator();
-            try {
-                keyGen.generatePrivateAndPublicKey(prefix);
-
-                JFrame frame = new JFrame("Registration");
-                frame.setContentPane(new Registration().Base);
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.pack();
-                frame.setVisible(true);
-                frame.setSize(500,500);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }else {
-            JFrame frame = new JFrame("Login");
-            frame.setContentPane(new Login().Base);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.pack();
-            frame.setVisible(true);
-            frame.setSize(500,500);
-        }
+        JFrame frame = new JFrame("URL");
+        frame.setContentPane(new ServerSelection().Base);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+        frame.setSize(500,500);
 
     }
 }

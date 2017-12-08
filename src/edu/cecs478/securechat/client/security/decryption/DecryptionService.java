@@ -1,5 +1,6 @@
 package edu.cecs478.securechat.client.security.decryption;
 
+import edu.cecs478.securechat.client.helper.Constants;
 import edu.cecs478.securechat.client.model.Message;
 import edu.cecs478.securechat.client.security.SecureChatPasswordFinder;
 import edu.cecs478.securechat.client.security.SecurityHelper;
@@ -90,7 +91,7 @@ public class DecryptionService{
                 if (o instanceof KeyPair){
                     KeyPair kp = (KeyPair)o;
                     //Setting cipher and decrypting mode
-                    Cipher cipher = Cipher.getInstance("RSA/NONE/OAEPWithSHA256AndMGF1Padding", "BC");
+                    Cipher cipher = Cipher.getInstance(Constants.RSA_CIPHER_SUITE, Constants.SECURITY_PROVIDER);
                     cipher.init(Cipher.DECRYPT_MODE, kp.getPrivate());
 
                     //Decrypting the data
