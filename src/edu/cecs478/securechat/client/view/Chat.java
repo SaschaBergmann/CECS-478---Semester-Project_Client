@@ -17,6 +17,8 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by sasch on 09/10/2017.
@@ -68,25 +70,39 @@ public class Chat extends JFrame{
         recieveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String privateKey = "./"+prefix+"private.pem";
-                List<Message> msgs;
-                msgs = session.getMessages();
-
-                for (Message message :
-                        msgs) {
-                    try {
-                        message = DecryptionService.decrypt(message, privateKey);
-                        String output = new String(message.getMessage(), "UTF-8");
-                        output = message.getSender()+": "+output;
-                        printToHistory(output);
-                    } catch (IntegrityNotGuaranteedException e1) {
-                        e1.printStackTrace();
-                    } catch (UnsupportedEncodingException e1) {
-                        e1.printStackTrace();
-                    }
-                }
+                receiveMessages();
             }
         });
+
+        TimerTask t = new TimerTask() {
+            @Override
+            public void run() {
+                receiveMessages();
+            }
+        };
+
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(t,200,2000);
+    }
+
+    private void receiveMessages() {
+        String privateKey = "./"+prefix+"private.pem";
+        List<Message> msgs;
+        msgs = session.getMessages();
+
+        for (Message message :
+                msgs) {
+            try {
+                message = DecryptionService.decrypt(message, privateKey);
+                String output = new String(message.getMessage(), "UTF-8");
+                output = message.getSender()+": "+output;
+                printToHistory(output);
+            } catch (IntegrityNotGuaranteedException e1) {
+                e1.printStackTrace();
+            } catch (UnsupportedEncodingException e1) {
+                e1.printStackTrace();
+            }
+        }
     }
 
     private void printToHistory(String content){

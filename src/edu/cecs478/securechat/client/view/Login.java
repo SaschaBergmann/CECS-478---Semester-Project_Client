@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
  * Created by sasch on 08/11/2017.
  */
 public class Login extends JFrame{
+    private String URLBase = "";
     public JPanel Base;
     private JTextField usernameInputTextField;
     private JTextField passwordTextField;
@@ -22,7 +23,7 @@ public class Login extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 Account account = new Account(usernameInputTextField.getText(), passwordTextField.getText().getBytes(), new byte[0], new byte[0], "");
 
-                Session session = new Session(account);
+                Session session = new Session(account, URLBase);
 
                 JFrame frame = (JFrame)SwingUtilities.getRoot(Base);
                 frame.setTitle("Chat");
@@ -35,5 +36,13 @@ public class Login extends JFrame{
                 dispose();
             }
         });
+    }
+
+    public String getURLBase() {
+        return URLBase;
+    }
+
+    public void setURLBase(String URLBase) {
+        this.URLBase = URLBase;
     }
 }
