@@ -18,6 +18,6 @@ public class SecureChatPasswordFinder implements PasswordFinder {
      */
     @Override
     public char[] getPassword() {
-        return ("NotFrench").toCharArray();
+        return ("").toCharArray();
     } //TODO: Read from file
 }
